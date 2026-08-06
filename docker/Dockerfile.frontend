@@ -1,0 +1,10 @@
+FROM node:20-alpine
+WORKDIR /app
+#When building the frontend, We have to supply the db url, because only then build step will succed as it has to fetch the data from the db so we will supply it during the build step
+ARG DATABASE_URL
+COPY . .
+RUN bun install
+RUN bun run db:generate
+RUN DATABASE_URL=${DATABASE_URL} bun run build
+CMD ["bun", "run", "start:frontend"]
+
