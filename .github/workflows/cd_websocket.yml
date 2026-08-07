@@ -22,7 +22,7 @@ jobs:
               uses: docker/build-push-action@v7
               with:
                 context: . ## Context means from where do you want to build, We will build it from the root folder
-                file: ./docker/Dockerfile.websocket
+                file: ./docker/Dockerfile.ws
                 push: true
                 tags: cryptingle/todo-websocket:${{ github.sha }}
             
