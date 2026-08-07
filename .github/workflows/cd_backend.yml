@@ -1,4 +1,4 @@
-name: TEST THE WORKFLOW
+name: BACKEND WORKFLOW
 
 on:
   push:
