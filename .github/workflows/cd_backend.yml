@@ -32,7 +32,7 @@ jobs:
                 echo "${{ secrets.EC2_SSH_PVT_KEY }}" > ~/.ssh/id_rsa
                 chmod 600 ~/.ssh/id_rsa
                 ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
-                ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "docker stop todo-backend && docker run --name todo-backend -d -p 8080:8080 cryptingle/todo-backend:${{ github.sha }}"
+                ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "docker pull cryptingle/todo-backend:${{ github.sha }} || true && docker stop todo-backend || true && docker rm -f todo-backend || true && docker run --name todo-backend --restart unless-stopped -d -p 8080:8080 cryptingle/todo-backend:${{ github.sha }}"
 
 # ssh-keyscan -H ${{ secrets.EC2_HOST_DEV }} >> ~/.ssh/known_hosts instead of this we can also do ssh -o StrictHostKeyChecking=no -i <pvt key address>
 #In the above we didn't use -i because by default it will take id_rsa key
